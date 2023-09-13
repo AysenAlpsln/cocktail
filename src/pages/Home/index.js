@@ -3,10 +3,14 @@ import {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCocktails } from '../../redux/cocktailsSlice';
 import Card from './card';
+import Loading from '../../components/Loading';
+import Error from '../../components/Error';
 
 function Home() {
   const cocktails = useSelector((state) => state.cocktails.drinks);
   const isLoading = useSelector((state) => state.cocktails.isLoading);
+  const page = useSelector((state) => state.cocktails.page);
+  const hasNextPage = useSelector((state) => state.cocktails.hasNextPage);
   const error = useSelector((state) => state.cocktails.error);
   const dispatch = useDispatch();
 
@@ -14,12 +18,8 @@ function Home() {
     dispatch(fetchCocktails());
   }, [dispatch])
 
-  if(isLoading) {
-    return <div>loading..</div> // loading ekranı tasarlanacak
-  }
-
   if(error) {
-    return <div>Error: {error}</div>
+    return <Error error={error} />
   }
 
   return (
@@ -39,6 +39,21 @@ function Home() {
             />
           ))
         }
+      </div>
+      
+      <div className='moreButton'>
+        {isLoading && <Loading />}
+        {hasNextPage && !isLoading &&
+        <button onClick={() => dispatch(fetchCocktails(page))}>
+          Load More
+        </button>
+        }
+        {!hasNextPage && !isLoading &&
+        <div className='nothingShown'>
+          There is nothing to be shown.
+        </div>
+        }
+        
       </div>
     </div>
   )

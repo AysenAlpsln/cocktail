@@ -12,8 +12,8 @@ html, body {
   flex-wrap: wrap;
 }
 .wrapper {
-  width: 300px;
-  height: 500px;
+  width: 20%;
+  height: 450px;
   background: white;
   margin: auto;
   position: relative;
@@ -166,4 +166,67 @@ html, body {
 }
 .wrapper .inside .contents p {
   font-size: 13px;
+}
+
+.moreButton {
+  display: flex;
+  margin-top: 30px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.moreButton button {
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid #92879b;
+  border-radius: 15px;
+  background-color: #92879b;
+  color: white;
+}
+.moreButton .nothingShown {
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid #92879b;
+  border-radius: 15px;
+  background-color: white;
+  color: #92879b;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.loading .load-wrapp {
+  float: left;
+  width: 100px;
+  margin: 0 10px 10px 0;
+  padding: 20px 20px 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.loading .square {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  background-color: #92879b;
+}
+
+.loading .load .square {
+  animation: loading 1.5s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(70px, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
 }
