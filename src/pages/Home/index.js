@@ -8,17 +8,19 @@ import Error from '../../components/Error';
 
 function Home() {
   const cocktails = useSelector((state) => state.cocktails.drinks);
-  const isLoading = useSelector((state) => state.cocktails.isLoading);
+  const status = useSelector((state) => state.cocktails.status);
   const page = useSelector((state) => state.cocktails.page);
   const hasNextPage = useSelector((state) => state.cocktails.hasNextPage);
   const error = useSelector((state) => state.cocktails.error);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCocktails());
-  }, [dispatch])
+    if(status === 'idle') {
+      dispatch(fetchCocktails());
+    }
+  }, [dispatch, status])
 
-  if(error) {
+  if(status === 'failed') {
     return <Error error={error} />
   }
 
@@ -42,13 +44,13 @@ function Home() {
       </div>
       
       <div className='moreButton'>
-        {isLoading && <Loading />}
-        {hasNextPage && !isLoading &&
-        <button onClick={() => dispatch(fetchCocktails(page))}>
-          Load More
-        </button>
+        {status === 'loading' && <Loading />}
+        {hasNextPage && status !== 'loading' &&
+          <button onClick={() => dispatch(fetchCocktails(page))}>
+            Load More
+          </button>
         }
-        {!hasNextPage && !isLoading &&
+        {!hasNextPage && status !== 'loading' &&
         <div className='nothingShown'>
           There is nothing to be shown.
         </div>

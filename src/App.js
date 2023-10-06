@@ -3,6 +3,7 @@ import './App.css';
 
 //pages
 import Home from './pages/Home';
+import Detail from './pages/Detail';
 
 import {
   BrowserRouter,
@@ -17,6 +18,7 @@ function App() {
         
         <Route path="/">
           <Route index element={<Home />} />
+          <Route path='/cocktail/:id' element={<Detail />} />
         </Route>
       </Routes>
     </BrowserRouter>

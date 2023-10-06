@@ -1,11 +1,22 @@
+@font-face {
+  font-family: 'Bello Pro';
+  src: url('../public/BelloPro.otf') format('truetype'); 
+}
+
 html, body {
   background: #e3e3d8;
-  font-family: sans-serif;
-  padding: 25px;
+  font-family: initial;
 }
+
+/*Home Page CSS*/
+
 .listTitle {
   display: flex;
   justify-content: center;
+  font-family:"Bello Pro", sans-serif;
+  text-shadow: 1px 1px 0 #92879b, 2px 2px 0 #92879b, 3px 3px 0 #92879b, 4px 4px 0 #92879b, 5px 5px 0 #92879b, 6px 6px 0 #92879b, 7px 7px 0 #92879b;
+  color: white;
+  font-size: 45px;
 }
 .listContainer {
   display: flex;
@@ -84,6 +95,7 @@ html, body {
   background: #f1f1f1;
   transition: background 0.5s;
   border-left: solid thin rgba(0, 0, 0, 0.1);
+  color: black;
 }
 .wrapper .container .bottom .left .go svg {
   font-size: 30px;
@@ -230,3 +242,196 @@ html, body {
     transform: translate(0, 0) rotate(0deg);
   }
 }
+
+
+/*Detail Page CSS*/
+
+.detail-content {
+  display: grid;
+  grid-template-areas: "navigation cocktail-recipe cocktail-image" "context context cocktail-image";
+  grid-template-columns: min-content auto 35%;
+  grid-template-rows: auto min-content;
+  margin: auto;
+  min-height: 100vh;
+  max-height: calc(100vh - 4em);
+  background: #fff;
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+.context__wrapper {
+  grid-area: context;
+  background: #f7f7f7;
+  color: #333;
+  padding: 15px 20px;
+  font: 400 10px "Raleway", sans-serif;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto max-content;
+}
+.navigation {
+  grid-area: navigation;
+  border-right: 1px solid #eee;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  color: #dbc7b1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 20px;
+  font: 16px "Playfair Display", serif;
+  text-align: center;
+}
+.cocktail-image {
+  grid-area: cocktail-image;
+}
+.cocktail-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.cocktail-name {
+  font: 900 45px Raleway;
+  text-transform: uppercase;
+  margin: 20px 0 5px;
+  letter-spacing: 2px;
+  color: #92879b;
+  position: relative;
+}
+.cocktail-serving {
+  font: 400 16px Raleway;
+  color: #92879b;
+  margin: 20px 0;
+  max-width: 300px;
+}
+.cocktail-serving svg {
+  width: 35px;
+  height: 35px;
+}
+.cocktail-serving svg path {
+  fill: #92879b;
+}
+.cocktail-serving p {
+  display: inline-block;
+  vertical-align: top;
+  margin: 12px 6px 6px;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #92879b;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #424043;
+}
+.cocktail-recipe {
+  grid-area: cocktail-recipe;
+  color: #999;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 5px;
+  max-height: 100%;
+  padding: 50px 60px;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 30px auto;
+  grid-template-rows: repeat(4, max-content);
+  line-height: 1.6;
+}
+.cocktail-recipe__title {
+  grid-column: span 2;
+}
+.cocktail-recipe__ingredients {
+  grid-column: span 2;
+  display: flex;
+  flex-wrap: wrap;
+}
+.cocktail-recipe__ingredients__item {
+  flex: 1;
+  padding: 0 40px 0 0;
+}
+.cocktail-recipe__ingredients__item h4 {
+  font: italic 18.1818181818px "Playfair Display", serif;
+  color: #d69762;
+  margin: 0 0 10px;
+  margin-top: 30px;
+}
+.cocktail-recipe__ingredients__item ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cocktail-recipe__ingredients__item ul li {
+  padding: 5px 0;
+}
+
+
+.cocktail-recipe__number {
+  font: italic 30px "Playfair Display", serif;
+  color: #d69762;
+  margin-top: -15px;
+}
+.cocktail-recipe__steps {
+  padding-right: 35px;
+}
+.cocktail-recipe__subtitle {
+  font: italic 30px "Playfair Display", serif;
+  color: #92879b;
+  margin: 45px 0 10px;
+  grid-column: span 2;
+}
+.cocktail-recipe__tips {
+  grid-column: span 2;
+  margin-top: 65px;
+  position: relative;
+  border: 2px solid #92879b;
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 4px #92879b;
+  text-align: center;
+  padding: 35px;
+}
+.cocktail-recipe__tips svg {
+  display: inline-block;
+  padding: 10px;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: -40px;
+  width: auto;
+  background: #fff;
+  width: 60px;
+  fill: #92879b;
+}
+.cocktail-recipe__tips h4 {
+  font: 900 24px Raleway;
+  text-transform: uppercase;
+  margin: 10px 0 15px;
+  color: #543b2e;
+}
+
+/*Footer Area Style*/
+
+footer {
+  text-align: right;
+  width: 100%;
+}
+footer a {
+  text-decoration: none;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px dashed #333;
+  color: #333;
+  margin: 0 3px;
+}
+footer a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.footer a svg {
+  height: 100%;
+  width: 100%;
+}
+

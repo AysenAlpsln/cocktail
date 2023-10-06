@@ -1,21 +1,22 @@
 import React from 'react';
-import { AiOutlineInfoCircle, AiOutlineDoubleRight } from 'react-icons/ai'
+import { AiOutlineInfoCircle, AiOutlineDoubleRight } from 'react-icons/ai';
+import { Link } from "react-router-dom";
 
 function Card(props) {
   return (
     <div key={props.id} className="wrapper">
       <div className="container">
         <div className="top">
-          <img src={props.image} />
+          <img src={props.image} alt={props.title}/>
         </div>
         <div className="bottom">
           <div className="left">
             <div className="details">
               <p>{props.title}</p>
             </div>
-            <div className="go">
+            <Link to={`/cocktail/${props.id}`} className="go">
               <AiOutlineDoubleRight/>
-            </div>
+            </Link>
           </div>
           
         </div>
