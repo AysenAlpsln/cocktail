@@ -35,6 +35,7 @@ function Home() {
         {
           cocktails.map(drink => (
             <Card 
+              key={drink.idDrink}
               id={drink.idDrink}
               title={drink.strDrink}
               image={drink.strDrinkThumb}

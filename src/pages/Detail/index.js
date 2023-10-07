@@ -1,98 +1,122 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { BiSolidDrink } from 'react-icons/bi';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import { BiSolidDrink, BiArrowBack } from 'react-icons/bi';
 import Footer from '../../components/Footer';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchDetail } from '../../redux/detailSlice';
+import Loading from '../../components/Loading';
+import Error from '../../components/Error';
 
 
 function Detail() {
-  const [cocktail, setCocktail] = useState(null);
-  const [ingredients, setIngredients] = useState([]);
+  const details = useSelector((state) => state.details.features[0]);
+  const status = useSelector((state) => state.details.status);
+  const error = useSelector((state) => state.details.error);
+  const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [ingredients, setIngredients] = useState([]);
+  
 
 
   useEffect(() => {
-    axios(`${process.env.REACT_APP_API_BASE_ENDPOINT}lookup.php?i=${id}`)
-      .then(res => res.data)
-      .then(data => setCocktail(data?.drinks[0]))
-  }, [id])
+    if(status === 'idle') {
+      dispatch(fetchDetail(id));
+    }
+  }, [dispatch, status, id])
 
 
-  for (var key in cocktail) {
+  for (var key in details) {
     if (key.startsWith("strIngredient")) {
       var num = key.match(/\d+/g)[0];
       var mesKey = "strMeasure" + key.match(/\d+/g)[0]; // içerik numarası
-      if(cocktail[key] !== null) {
-        ingredients.push({id: num, ing: cocktail[key], mes: cocktail[mesKey]});
+      if(details[key] !== null) {
+        ingredients.push({id: num, ing: details[key], mes: details[mesKey]});
       }
     }
   }
 
-  console.log(cocktail)
-  return (
-    <div>
-      <div className="detail-content">
-        <div className="navigation">{cocktail?.strDrink}</div>
-        <div className="cocktail-image">
-          <img src={cocktail?.strDrinkThumb} alt={cocktail?.strDrink} />
-        </div>
-        <div className="cocktail-recipe">
-          <div className="cocktail-recipe__title">
-            <div className="cocktail-name">
-              {cocktail?.strDrink}
-            </div>
-            <div className="cocktail-serving">
-              <BiSolidDrink />
-              <p>{cocktail?.strGlass}</p> {/* Bardak çeşidi */}
-            </div>
+  console.log(details)
+
+  if(status === 'failed') {
+    return <Error error={error} />
+  }
+
+  if(status === 'loading') {
+    return (<Loading />)
+  }
+  
+  if(status === 'succeeded') {
+    return (
+      <div>
+        <div className="detail-content">
+          <div className="navigation">{details?.strDrink}</div>
+          <div className="cocktail-image">
+            <img src={details?.strDrinkThumb} alt={details?.strDrink} />
           </div>
-          <div className="cocktail-recipe__ingredients">
-            <div className="cocktail-recipe__ingredients__item">
-              <h4>Ingredients</h4>
-              <ul>
-                {
-                  ingredients.map(item => (
-                    <li key={item.id}>{item.mes} {item.ing}</li>
-                  ))
-                }
-              </ul>
+          <div className="cocktail-recipe">
+            <div className='navigate-back' onClick={() => navigate(-1)}>
+              <BiArrowBack />
             </div>
+            <div className="cocktail-recipe__title">
+              <div className="cocktail-name">
+                {details?.strDrink}
+              </div>
+              <div className="cocktail-serving">
+                <BiSolidDrink />
+                <p>{details?.strGlass}</p> {/* Bardak çeşidi */}
+              </div>
+            </div>
+            <div className="cocktail-recipe__ingredients">
+              <div className="cocktail-recipe__ingredients__item">
+                <h4>Ingredients</h4>
+                <ul>
+                  {
+                    ingredients.map(item => (
+                      <li key={item.id}>{item.mes} {item.ing}</li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
+            
+            <div className="cocktail-recipe__subtitle">instructions</div>
+            
+            {details?.strInstructions &&
+              <div className="cocktail-recipe__number">EN</div>
+            }
+            {details?.strInstructions &&
+              <div className="cocktail-recipe__steps">{details.strInstructions}</div>
+            }
+            {details?.strInstructionsDE &&
+              <div className="cocktail-recipe__number">DE</div>
+            }
+            {details?.strInstructionsDE &&
+              <div className="cocktail-recipe__steps">{details.strInstructionsDE}</div>
+            }
+            {details?.strInstructionsFR &&
+              <div className="cocktail-recipe__number">FR</div>
+            }
+            {details?.strInstructionsFR &&
+              <div className="cocktail-recipe__steps">{details.strInstructionsFR}</div>
+            }
+            {details?.strInstructionsIT &&
+              <div className="cocktail-recipe__number">IT</div>
+            }
+            {details?.strInstructionsIT &&
+              <div className="cocktail-recipe__steps">{details.strInstructionsIT}</div>
+            }
+  
           </div>
           
-          <div className="cocktail-recipe__subtitle">instructions</div>
-          
-          {cocktail?.strInstructions &&
-            <div className="cocktail-recipe__number">EN</div>
-          }
-          {cocktail?.strInstructions &&
-            <div className="cocktail-recipe__steps">{cocktail.strInstructions}</div>
-          }
-          {cocktail?.strInstructionsDE &&
-            <div className="cocktail-recipe__number">DE</div>
-          }
-          {cocktail?.strInstructionsDE &&
-            <div className="cocktail-recipe__steps">{cocktail.strInstructionsDE}</div>
-          }
-          {cocktail?.strInstructionsFR &&
-            <div className="cocktail-recipe__number">FR</div>
-          }
-          {cocktail?.strInstructionsFR &&
-            <div className="cocktail-recipe__steps">{cocktail.strInstructionsFR}</div>
-          }
-          {cocktail?.strInstructionsIT &&
-            <div className="cocktail-recipe__number">IT</div>
-          }
-          {cocktail?.strInstructionsIT &&
-            <div className="cocktail-recipe__steps">{cocktail.strInstructionsIT}</div>
-          }
-
+          <Footer />
+  
         </div>
-        
-        <Footer />
-
       </div>
-    </div>
-  )
+    )
+  }
+  
 }
 
 export default Detail

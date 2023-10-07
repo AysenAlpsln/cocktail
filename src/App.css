@@ -336,7 +336,6 @@ html, body {
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 30px auto;
-  grid-template-rows: repeat(4, max-content);
   line-height: 1.6;
 }
 .cocktail-recipe__title {
@@ -370,7 +369,6 @@ html, body {
 .cocktail-recipe__number {
   font: italic 30px "Playfair Display", serif;
   color: #d69762;
-  margin-top: -15px;
 }
 .cocktail-recipe__steps {
   padding-right: 35px;
@@ -408,6 +406,15 @@ html, body {
   text-transform: uppercase;
   margin: 10px 0 15px;
   color: #543b2e;
+}
+
+.navigate-back {
+  cursor: pointer;
+}
+
+.navigate-back svg{
+  height: 2em;
+  width: 2em;
 }
 
 /*Footer Area Style*/
