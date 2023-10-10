@@ -1,51 +1,40 @@
-import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDetail } from '../../redux/detailSlice';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 
 
 function MiniDetail(props) {
-  const details = useSelector((state) => state.details.features[0]);
-  const status = useSelector((state) => state.details.status);
+  const ingredients = useSelector((state) => state.details.ingredients);
   const dispatch = useDispatch();
   const id = props.id;
 
-  const [ingredients, setIngredients] = useState([]);
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchDetail(id));
-    }
-  }, [dispatch, status, id])
-
-  for (var key in details) {
-    if (key.startsWith("strIngredient")) {
-      var num = key.match(/\d+/g)[0];
-      var mesKey = "strMeasure" + key.match(/\d+/g)[0]; // içerik numarası
-      if (details[key] !== null) {
-        ingredients.push({ id: num, ing: details[key], mes: details[mesKey] });
-      }
-    }
-  }
-
-  console.log(details)
-  console.log(ingredients)
+  const handleMouseEnter = () => {
+    dispatch(fetchDetail(id));
+  };
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th>Ingredients</th>
-        </tr>
-        {
-          ingredients.map(item => (
-            <tr key={item.id}>
-              <td>{item.mes} {item.ing}</td>
+    <div className="inside" onMouseEnter={handleMouseEnter}>
+      <div className="icon">
+        <AiOutlineInfoCircle/>
+      </div>
+      <div className="contents">
+        <table>
+          <tbody>
+            <tr>
+              <th>Ingredients</th>
             </tr>
-          ))
-        }
-      </tbody>
-    </table>
-
+            {
+              ingredients.map(item => (
+                <tr key={item.id}>
+                  <td>{item.mes} {item.ing}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
   )
 }
 

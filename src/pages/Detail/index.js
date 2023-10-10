@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BiSolidDrink, BiArrowBack } from 'react-icons/bi';
 import Footer from '../../components/Footer';
@@ -9,35 +9,20 @@ import Error from '../../components/Error';
 
 
 function Detail() {
-  const details = useSelector((state) => state.details.features[0]);
+  const details = useSelector((state) => state.details.features);
+  const ingredients = useSelector((state) => state.details.ingredients);
   const status = useSelector((state) => state.details.status);
   const error = useSelector((state) => state.details.error);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [ingredients, setIngredients] = useState([]);
   
-
-
   useEffect(() => {
     if(status === 'idle') {
       dispatch(fetchDetail(id));
     }
   }, [dispatch, status, id])
-
-
-  for (var key in details) {
-    if (key.startsWith("strIngredient")) {
-      var num = key.match(/\d+/g)[0];
-      var mesKey = "strMeasure" + key.match(/\d+/g)[0]; // içerik numarası
-      if(details[key] !== null) {
-        ingredients.push({id: num, ing: details[key], mes: details[mesKey]});
-      }
-    }
-  }
-
-  console.log(details)
 
   if(status === 'failed') {
     return <Error error={error} />

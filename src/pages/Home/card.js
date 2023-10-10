@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineInfoCircle, AiOutlineDoubleRight } from 'react-icons/ai';
+import { AiOutlineDoubleRight } from 'react-icons/ai';
 import { Link } from "react-router-dom";
 import MiniDetail from './miniDetail';
 
@@ -22,16 +22,7 @@ function Card(props) {
           
         </div>
       </div>
-      <div className="inside">
-        <div className="icon">
-          <AiOutlineInfoCircle/>
-        </div>
-        <div className="contents">
-          <MiniDetail
-            id={props.id}
-          />
-        </div>
-      </div>
+      <MiniDetail id={props.id} />
     </div>
   )
 }

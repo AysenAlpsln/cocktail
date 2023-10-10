@@ -12,6 +12,7 @@ export const detailSlice = createSlice({
   name: 'details',
   initialState: {
     features: [],
+    ingredients: [],
     status: 'idle',
     error: null,
   },
@@ -21,7 +22,22 @@ export const detailSlice = createSlice({
       state.status = 'loading';
     },
     [fetchDetail.fulfilled]: (state, action) => {
-      state.features = action.payload;
+      state.features = action.payload[0];
+
+      // ingredients dizisini sıfırla (üst üste eklemeyi engeller)
+      state.ingredients = [];
+
+      //ingredients
+      for (var key in state.features) {
+        if (key.startsWith("strIngredient")) {
+          var num = key.match(/\d+/g)[0];
+          var mesKey = "strMeasure" + key.match(/\d+/g)[0]; // içerik numarası
+          if (state.features[key] !== null) {
+            state.ingredients.push({ id: num, ing: state.features[key], mes: state.features[mesKey] });
+          }
+        }
+      }
+
       state.status = 'succeeded';
     },
     [fetchDetail.rejected]: (state, action) => {
