@@ -13,16 +13,17 @@ export const detailSlice = createSlice({
   initialState: {
     features: [],
     ingredients: [],
-    status: 'idle',
+    isLoading: false,
     error: null,
   },
   reducers: {},
   extraReducers: {
     [fetchDetail.pending]: (state) => {
-      state.status = 'loading';
+      state.isLoading = true;
     },
     [fetchDetail.fulfilled]: (state, action) => {
       state.features = action.payload[0];
+      state.isLoading = false;
 
       // ingredients dizisini sıfırla (üst üste eklemeyi engeller)
       state.ingredients = [];
@@ -37,11 +38,9 @@ export const detailSlice = createSlice({
           }
         }
       }
-
-      state.status = 'succeeded';
     },
     [fetchDetail.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.isLoading = false;
       state.error = action.error.message;
     }
   }
