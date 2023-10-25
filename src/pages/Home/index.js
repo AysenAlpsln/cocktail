@@ -27,7 +27,7 @@ function Home() {
     if (searchText !== '') {
       dispatch(fetchSearch(searchText));
     } else if(searchText === '' && searchActive) {
-      dispatch(fetchCocktails());
+      dispatch(fetchSearch(''));
     }
   }, [dispatch, searchText, searchActive]);
 
